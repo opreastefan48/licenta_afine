@@ -1,0 +1,11 @@
+.bg{
+    background-color: rgb(204, 204, 255);
+}
+.link{
+    color:rgb(10, 113, 72);
+}
+
+.link:hover{
+    color: rgb(124, 9, 196);
+    text-decoration: none;
+}

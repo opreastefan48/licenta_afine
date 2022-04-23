@@ -1,0 +1,36 @@
+.App {
+  text-align: center;
+}
+
+
+.spatiu{
+  padding: 20vh;
+}
+
+.center-table{
+    display: flex;
+    width: 50%;
+    margin-top: 2%;
+    margin-left: 25%;
+    justify-content: center;
+    align-items: center;    
+}
+.center1{
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+  
+}
+.center2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+}
+
+.add_button {
+  position: relative;
+  left:75%
+}
