@@ -95,10 +95,10 @@ const submit = (event) => {
     plantatie: plantatie,
     rand: rand
   };
-  // setKilograme('');
-  // setNume('');
-  // setPlantatie('');
-  // setRand('');
+  setKilograme('');
+  setNume('');
+  setPlantatie('');
+  setRand('');
 
   axios({
     url: 'http://localhost:8080/api/save',
@@ -130,6 +130,7 @@ const addName = (event) => {
   event.preventDefault();
   const payload = {
     nume: new_name,
+    total: 0,
   };
   setNew_Name('');
   axios({

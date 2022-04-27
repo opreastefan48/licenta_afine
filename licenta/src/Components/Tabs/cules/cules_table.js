@@ -20,30 +20,46 @@ import culegatori_list from './form'
 function Row(props) {
 
   const { row } = props;
-
   const [open, setOpen] = React.useState(false);
-
+  var total = 0;
   const [data, getData] = useState([])
   const URL = 'http://localhost:8080/api/culegator';
 
   useEffect(() => {
-      fetchData()
+    fetch(URL)
+    .then((res) =>
+        res.json())
+
+    .then((response) => {
+        getData(response);
+    })
   }, [])
+  //console.log("DATA: ", data)
 
+  
+  const getTable = (item) => {
+    if (item.nume === row.nume) 
+    {
+      return item;
+    }else{
+      return '';
 
-  const fetchData = () => {
-      fetch(URL)
-          .then((res) =>
-              res.json())
+    }
+};
 
-          .then((response) => {
-              getData(response);
-              console.log(data);
+  function getTotal(){
+    for (var i = 0; i < data.length; i++) {
+      if (data[i].nume === row.nume) 
+      { 
+      total = parseInt(total) + parseInt(data[i].kilograme);
+      console.log('total', total);
+      }
+    }
+  }
+  
+getTotal();
 
-          })
-
-  } 
-
+  
   return (
     <React.Fragment>
           <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
@@ -56,6 +72,11 @@ function Row(props) {
           <TableCell component="th" scope="row" >
           {row.nume}
           </TableCell>
+
+          <TableCell component="th" scope="row" >
+            {total}
+          </TableCell>
+
         </TableRow>
 
         <TableRow>
@@ -71,9 +92,9 @@ function Row(props) {
                   <TableRow>
 
                     <TableCell align="left" > Date </TableCell>
-                    <TableCell align="center"> Cantitate culeasa </TableCell>
-                    <TableCell align="center"> Plantatia </TableCell>
-                    <TableCell align="center"> Randul </TableCell>
+                    <TableCell align="left"> Cantitate culeasa </TableCell>
+                    <TableCell align="left"> Plantatia </TableCell>
+                    <TableCell align="left"> Randul </TableCell>
 
                   </TableRow>
                 </TableHead>
@@ -81,13 +102,15 @@ function Row(props) {
                 <TableBody>
 
                 {data.map((item, i) => (
-                    <tr key={i}>
-                        <td>{item.date}</td>
-                        <td>{item.kilograme}</td>
-                        <td>{item.plantatie}</td>
-                        <td>{item.rand}</td>
+                    <tr key={i} >
+                      <td>{getTable(item).date}</td>
+                      <td align="center">{getTable(item).kilograme }</td>
+                      <td align="center">{getTable(item).plantatie}</td>
+                      <td align="center">{getTable(item).rand}</td>
+
                     </tr>
                 ))}
+
                 </TableBody>
 
               </Table>
@@ -130,7 +153,7 @@ export default function Cules() {
                 <TableRow>
                   <TableCell />
                   <TableCell>Nume culegator</TableCell>
-                  <TableCell align="center">Total (kg)</TableCell>
+                  <TableCell align="left">Total (kg)</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
