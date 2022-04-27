@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
@@ -15,42 +15,50 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Box from '@mui/material/Box';
 import './cules.css'
 import FormCules from './form';
-
-
-
-function createData(name,cantitate_totala){
-  return{
-    name,
-    cantitate_totala,
-      details: [
-        { date: '2020-01-05', cantitate: 3 , plantatia: 2, randul: 22},
-        { date: '2020-01-02', cantitate: 1 , plantatia: 1, randul: 12},
-      ],
-  };
-}
-
+import culegatori_list from './form'
 
 function Row(props) {
 
   const { row } = props;
+
   const [open, setOpen] = React.useState(false);
+
+  const [data, getData] = useState([])
+  const URL = 'http://localhost:8080/api/culegator';
+
+  useEffect(() => {
+      fetchData()
+  }, [])
+
+
+  const fetchData = () => {
+      fetch(URL)
+          .then((res) =>
+              res.json())
+
+          .then((response) => {
+              getData(response);
+              console.log(data);
+
+          })
+
+  } 
 
   return (
     <React.Fragment>
-      <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
-        <TableCell>
-          <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
-            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-          </IconButton>
-        </TableCell>
-        <TableCell component="th" scope="row" >
-          {row.name}
-        </TableCell>
-        <TableCell align="center">{row.cantitate_totala}</TableCell>
+          <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+          <TableCell>
+            <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
+              {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+            </IconButton>
+          </TableCell>
+  
+          <TableCell component="th" scope="row" >
+          {row.nume}
+          </TableCell>
+        </TableRow>
 
-      </TableRow>
-
-      <TableRow>
+        <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box margin={1}>
@@ -72,27 +80,14 @@ function Row(props) {
 
                 <TableBody>
 
-                  {row.details.map((historyRow) => (
-                    <TableRow key={historyRow.date}>
-                      
-                      <TableCell component="th" scope="row" align="left">
-                        {historyRow.date}    
-                      </TableCell>
-
-                      <TableCell align="center">
-                        {historyRow.cantitate}   
-                      </TableCell>
-
-                      <TableCell align="center">
-                        {historyRow.plantatia}   
-                      </TableCell>
-
-                      <TableCell align="center">
-                        {historyRow.randul}   
-                      </TableCell>
-
-                    </TableRow>
-                  ))}
+                {data.map((item, i) => (
+                    <tr key={i}>
+                        <td>{item.date}</td>
+                        <td>{item.kilograme}</td>
+                        <td>{item.plantatie}</td>
+                        <td>{item.rand}</td>
+                    </tr>
+                ))}
                 </TableBody>
 
               </Table>
@@ -104,71 +99,29 @@ function Row(props) {
   );
 }
 
-Row.propTypes = {
-  row: PropTypes.shape({
-    history: PropTypes.arrayOf(
-      PropTypes.shape({
-        cantitate: PropTypes.number.isRequired,
-        plantatia: PropTypes.string.isRequired,
-        date: PropTypes.string.isRequired,
-        rand: PropTypes.string.isRequired,
-      }),
-    ).isRequired,
-    name: PropTypes.string.isRequired,
-    cantitate_totala: PropTypes.number.isRequired,
-  }).isRequired,
-};
+export default function Cules() { 
 
 
-const rows = [
-  createData('Nume 1', 12),
-  createData('Nume 2', 33),
-  createData('Nume 3', 6),
-  createData('Nume 4', 59),
-  createData('Nume 5', 19),
-];
-
-
-const RanduriPlantatie = [
-  {
-    value: '1',
-    label: 'Randul 1',
-  },
-  {
-    value: '2',
-    label: 'Randul 2',
-  },{
-    value: '3',
-    label: 'Randul 3',
-  },{
-    value: '4',
-    label: 'Randul 4',
-  },{
-    value: '5',
-    label: 'Randul 5',
-  },
-];
-
-
-const NumarPlantatie = [
-  {
-    value: '1',
-    label: 'Plantatia 1',
-  },
-  {
-    value: '2',
-    label: 'Plantatia 2',
-  },{
-    value: '3',
-    label: 'Plantatia 3',
-  },
-]
-
-  
-export default function Cules() {
+    const [culegatori_list, getCulegatori_list] = useState([])
+    const URL_names = 'http://localhost:8080/api/names';
+    useEffect(() => {
+        fetchData_names()
+    }, [])
+ 
+    const fetchData_names = () => {
+        fetch(URL_names)
+            .then((res) =>
+                res.json())
+ 
+            .then((response) => {
+                getCulegatori_list(response);
+            })
+    }
   return (
 
+
       <div> 
+
         <FormCules></FormCules>
         <div className='center-table'>
           <TableContainer component={Paper} >
@@ -181,9 +134,11 @@ export default function Cules() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows.map((row) => (
-                  <Row key={row.name} row={row} />
-                ))}
+
+                  {culegatori_list.map((row,i) => (
+                    <Row key={i} row={row} />
+                  ))}
+
               </TableBody>
             </Table>
           </TableContainer>

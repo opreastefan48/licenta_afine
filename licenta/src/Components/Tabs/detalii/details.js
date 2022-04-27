@@ -18,6 +18,8 @@ import Button from '@mui/material/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './details.css'
+import axios from 'axios';
+
 
 const useRowStyles = makeStyles({
   root: {
@@ -38,6 +40,33 @@ function Row(props) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
   const classes = useRowStyles();
+  const [holder, setHolder] = React.useState('holder');
+
+  
+  const [problem, setProblem] = React.useState('');
+
+  const handleChangeProblem = (event) => {
+    setProblem(event.target.value);
+  }
+  const submit = (event) => {
+    event.preventDefault();
+    const payload = {
+      problema: problem
+    };
+  
+    axios({
+      url: 'http://localhost:8080/api/save',
+      method: 'POST',
+      data: payload
+    })
+    .then(() =>{
+      console.log('Data has been set');
+    })
+    .catch(()=> {
+      console.log('error')
+    });;
+  }
+
 
   return (
     <React.Fragment>
@@ -58,17 +87,30 @@ function Row(props) {
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={4}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box margin={1}>
-              <Typography variant="h6" gutterBottom component="div">
+              <Typography variant="h6" gutterBottom>
                 Probleme gasite la o planta de pe rand:
               </Typography>
               <Table>
                 <TableBody>
-                <Form.Group className="mb-5" controlId="exampleForm.ControlTextarea1">
-                  <Form.Control as="textarea" rows={6} />
-                </Form.Group>
-                <Button variant="contained" color="success">
-                  Salveaza
-                </Button>
+
+                <form>
+                  <div className='form-input'>
+
+                    <textarea
+                    placeholder={holder}
+                    name="problem"
+                    cols="30"
+                    rows="10"
+                    value={problem}
+                    onChange={handleChangeProblem}
+                    >
+
+                    </textarea>
+                  </div>
+
+                </form>
+
+
                 </TableBody>
               </Table>
             </Box>
@@ -93,14 +135,13 @@ const rows = [
 export default function Details() {
   return (
 
-    <div >
       <div className='center-table'>
         <TableContainer component={Paper} >
           <Table aria-label="collapsible table">
             <TableHead>
               <TableRow>
                 <TableCell />
-                <TableCell> asdsad</TableCell>
+                <TableCell> Plantatia 1</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -112,9 +153,6 @@ export default function Details() {
         </TableContainer>
       </div>
       
-              
-
-    </div>
     
   );
 }

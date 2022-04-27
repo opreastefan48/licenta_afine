@@ -12,7 +12,10 @@ const filter = createFilterOptions();
 
 export default function Culegator() {
   const [value, setValue] = React.useState(null);
+  
   const [open, toggleOpen] = React.useState(false);
+
+  console.log(' Value: ', value);
 
   const handleClose = () => {
     setDialogValue({

@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const path = require('path');
+const cors = require('cors');
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -16,9 +17,15 @@ mongoose.connect(CONNECTION_STRING,{
 })
 
 mongoose.connection.on('connected',()=>{
-    console.log('Mongoose is connected!!!!');
+    console.log('Connected to DataBase!!!!');
 })
 
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: false}));
+
+app.use(cors());
+app.options('*', cors());
 //httpss request logger
 app.use(morgan('tiny'));
 app.use('/api',routes);

@@ -1,9 +1,27 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import TextField from '@mui/material/TextField';
 import { MenuItem } from '@mui/material';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Modal from '@mui/material/Modal';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 import './cules.css'
-import Culegator from './nume';
-import Stack from '@mui/material/Stack';
+import axios from 'axios';
+
+
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 500,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 5,
+};
 
 const randuri = [
   {
@@ -39,84 +57,230 @@ const plantatii = [
   },
 ]
 
-export default function FormCules() {
-    const [rand, setRand] = React.useState('');
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
-    const handleChangeRand = (event) => {
-        setRand(event.target.value);
-        
-  };
+
+export default function FormCules() {
+  const [nume, setNume] = React.useState('');
+
+  const [rand, setRand] = React.useState('');
 
   const [plantatie, setPlantatie] = React.useState('');
 
-    const handleChangePlantatie = (event) => {
-        setPlantatie(event.target.value);
-        
+  let [Kilograme, setKilograme] = useState('');
+
+  const handleChangeNume = (event) => {
+    setNume(event.target.value);
+};
+
+  const handleChangeRand = (event) => {
+      setRand(event.target.value);
+};
+
+  const handleChangePlantatie = (event) => {
+      setPlantatie(event.target.value);
+};
+
+const handleChangeKG = (event) => {
+  setKilograme(event.target.value);
+}
+
+const submit = (event) => {
+  event.preventDefault();
+  const payload = {
+    nume: nume,
+    kilograme: Kilograme,
+    plantatie: plantatie,
+    rand: rand
   };
+  // setKilograme('');
+  // setNume('');
+  // setPlantatie('');
+  // setRand('');
+
+  axios({
+    url: 'http://localhost:8080/api/save',
+    method: 'POST',
+    data: payload
+  })
+  .then(() =>{
+    console.log('Data has been set');
+  })
+  .catch(()=> {
+    console.log('error')
+  });;
+}
+const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+//console.log('Nume ',nume ,' Kilograme: ', Kilograme, ' Plantatia: ',plantatie, ' Rand: ', rand);
+
+const [new_name, setNew_Name] = React.useState('');
+
+const handleChangeNewName = (event) => {
+  setNew_Name(event.target.value);
+}
+
+//console.log("newname: ",new_name);
+
+const addName = (event) => {
+  event.preventDefault();
+  const payload = {
+    nume: new_name,
+  };
+  setNew_Name('');
+  axios({
+    url: 'http://localhost:8080/api/save_names',
+    method: 'POST',
+    data: payload
+  })
+  .then(() =>{
+    console.log('Data has been set');
+  })
+  .catch(()=> {
+    console.log('error')
+  });;
+}
+
+
+    const [culegatori_list, getCulegatori_list] = useState([])
+    const URL = 'http://localhost:8080/api/names';
+    useEffect(() => {
+        fetchData()
+    }, [])
+ 
+    const fetchData = () => {
+        fetch(URL)
+            .then((res) =>
+                res.json())
+ 
+            .then((response) => {
+                //console.log(response);
+                getCulegatori_list(response);
+            })
+    }
+    //console.log(culegatori_list);
+
+    const [open_snackbar, setOpenSnackbar] = React.useState(false);
+
+    const handleClickSnackbar = () => {
+      setOpenSnackbar(true);
+    };
+  
+    const handleCloseSnackbar = (event, reason) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+      setOpenSnackbar(false);
+    };
+
+
+
 
   return (
 
-    <div className='form'>
-      
-      <div className='center1' >
-      
-        <Stack
-          direction={{ xs: 'column', sm: 'row' }}
-          spacing={{ xs: 1, sm: 2, md: 4 }}
-        >
-          <Culegator/>
+    <div>
 
-          <TextField
+      <form onSubmit={submit}>
+        <div className='center1' >
+
+            <TextField 
+            select
             required
-            id="outlined-number"
-            label="Cantitate"
-            type="number"
-            InputLabelProps={{
-              shrink: true,
-            }}
-          />
-        </Stack>
-      </div>
+            label="Culegator"
+            value={nume}
+            onChange={handleChangeNume}
+              >
+            {culegatori_list.map((option) => (
+              <MenuItem key={option.id} value={option.nume}>
+                {option.nume}
+              </MenuItem>
+              ))}
+            </TextField>
 
-      <div className='center2'>
+            <TextField
+              required
+              id="outlined-number"
+              label="Cantitate"
+              type="text"
+              autoComplete='off'
+              value={Kilograme}
+              onChange={handleChangeKG}
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+            </div>
 
-        <TextField 
-          select
-          required
-          label="Plantatia"
-          value={plantatie}
-          onChange={handleChangePlantatie}
-          
-          style ={{width: '11%'}}
+            <div className='center2'>
+            <TextField 
+            select
+            required
+            label="Plantatia"
+            value={plantatie}
+            onChange={handleChangePlantatie}
+
+              >
+            {plantatii.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+              ))}
+            </TextField>
+
+            <TextField 
+            select
+            required
+            label="Rand"
+            value={rand}
+            onChange={handleChangeRand}
+              >
+            {randuri.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+              ))}
+            </TextField>
+
+                          
+            </div>
+            <button onClick={handleClickSnackbar} className='submit_button'> Submit </button>
+
+      </form>
+
+            <Button variant="outlined" onClick={handleOpen}>Adauga Culegator</Button>
+            <Modal
+              open={open}
+              onClose={handleClose}
             >
-          {plantatii.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-            ))}
-         </TextField>
+              <Box sx={style}>
+              <form onSubmit={addName}>
 
-          <div className='spatiu'></div>
-
-          <TextField 
-          select
-          required
-          label="Rand"
-          value={rand}
-          onChange={handleChangeRand}
-          
-          style ={{width: '11%'}}
-            >
-          {randuri.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-            ))}
-         </TextField>
-        
-                        
-      </div>
-
+              <TextField
+              required
+              id="outlined-number"
+              label="Adauga Nume"
+              type="text"
+              autoComplete='off'
+              value={new_name}
+              onChange={handleChangeNewName}
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+                <button onClick={handleClickSnackbar} className='submit_button'> Submit </button>
+              </form>
+              </Box>
+            </Modal>
+            <Snackbar open={open_snackbar} autoHideDuration={8000} onClose={handleCloseSnackbar}>
+                    <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: '100%' }}>
+                      Datele au fost adaugate cu succes!!
+                    </Alert>
+            </Snackbar>
+            
     </div>
   );
 }

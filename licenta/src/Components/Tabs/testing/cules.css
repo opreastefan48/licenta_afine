@@ -38,7 +38,7 @@
   margin: 10px;
 
 }
-form{
+.form_cules{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -59,3 +59,9 @@ form{
   cursor: pointer;
   border-radius: 12px;
 }
+
+.submit_button:hover {
+  background-color:#002ead;
+  transition: 0.7s;
+}
+
