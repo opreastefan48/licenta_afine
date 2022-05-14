@@ -1,20 +1,45 @@
-import React from "react"
-import { Link } from "react-router-dom";
-import './navbar.css'
+import { useState } from "react";
+import "./navbar.css";
 
-function Nav_bar(){
+export default function Nav_bar() {
+  const [isNavExpanded, setIsNavExpanded] = useState(false);
 
-    return(
-    <nav className="navbar bg container">
-        <h4> <Link className="link" to="/detalii">Detalii Afine</Link> </h4>
-        <h4> <Link className="link" to="/cules">Cules</Link> </h4>
-        <h4> <Link className="link" to="/fertilizare">Fertilizare</Link> </h4>
-        {/* <h4> <Link className="link" to="/test">test api</Link> </h4> */}
-
-
+  return (
+    <nav className="navigation">
+      <a href="/" className="brand-name">
+        <img src="https://logopond.com/logos/88ebd3bee0a73daa733e824809d77759.png" width={50}/>
+      </a>
+      <button
+        className="hamburger"
+        onClick={() => {
+          setIsNavExpanded(!isNavExpanded);
+        }}
+      >
+        {/* icon from Heroicons.com */}
+      </button>
+      <div
+        className={
+          isNavExpanded ? "navigation-menu expanded" : "navigation-menu"
+        }
+      >
+        <ul>
+          <li>
+            <a href="/">Home</a>
+          </li>
+          <li>
+            <a href="/detalii">Detalii</a>
+          </li>
+          <li>
+            <a href="/cules">Adauga Cantitate</a>
+          </li>
+          <li>
+            <a href="/total">Total Cules</a>
+          </li>
+          <li>
+            <a href="/fertilizare">Fertilizare</a>
+          </li>
+        </ul>
+      </div>
     </nav>
-)
-
+  );
 }
-
-export default Nav_bar;

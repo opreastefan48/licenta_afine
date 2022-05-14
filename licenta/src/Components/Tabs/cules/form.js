@@ -8,6 +8,8 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import './cules.css'
 import axios from 'axios';
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
 
 
 
@@ -182,9 +184,7 @@ const addName = (event) => {
 
 
   return (
-
     <div>
-
       <form onSubmit={submit}>
         <div className='center1' >
 
@@ -206,7 +206,8 @@ const addName = (event) => {
               required
               id="outlined-number"
               label="Cantitate"
-              type="text"
+              placeholder='Cantitate'
+              type="number"
               autoComplete='off'
               value={Kilograme}
               onChange={handleChangeKG}
@@ -251,8 +252,13 @@ const addName = (event) => {
             <button onClick={handleClickSnackbar} className='submit_button'> Submit </button>
 
       </form>
+            <div className='fab_add'>
+            <Fab variant="extended" color="secondary" aria-label="add" onClick={handleOpen}>
+              <AddIcon  sx={{ mr: 1}} />
+              Adauga Culegator
+            </Fab>
+            </div>
 
-            <Button variant="outlined" onClick={handleOpen}>Adauga Culegator</Button>
             <Modal
               open={open}
               onClose={handleClose}

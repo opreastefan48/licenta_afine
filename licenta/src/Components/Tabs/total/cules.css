@@ -1,3 +1,6 @@
+.App {
+  text-align: center;
+}
 
 
 .spatiu{
@@ -19,7 +22,6 @@
   justify-content: center;
   align-items: center;
   flex-direction: row;
-  margin-top: 70px;
 
 }
 .center1>div{
@@ -31,7 +33,6 @@
   justify-content: center;
   align-items: center;
   flex-direction: row;
-  margin-bottom: 50px;
 }
 .center2>div{
   width: 200px !important;
@@ -58,11 +59,4 @@ form{
   transition-duration: 0.4s;
   cursor: pointer;
   border-radius: 12px;
-}
-
-
-.fab_add{
-  position: fixed;
-  bottom: 100px;
-  right: 100px;
 }
