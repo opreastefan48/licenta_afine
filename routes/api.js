@@ -100,6 +100,9 @@ router.get('/problems',  (req, res) =>{
         })
   });
 
-
+router.delete("/api/problems/:id", async (req, res) => {
+    const deletedProblem = await Problems.findByIdAndDelete(req.params.id);
+    res.send(deletedProblem);
+  });
 
 module.exports = router;

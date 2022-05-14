@@ -1,8 +1,4 @@
 
-.spatiu{
-  padding: 1vh;
-}
-
 .center-table{
     display: flex;
     width: 50%;
@@ -10,4 +6,19 @@
     margin-left: 25%;
     justify-content: center;
     align-items: center;    
+    margin-bottom: 10%;
+}
+
+.submit_button{
+  margin-top: 10px;
+  width: 100px;
+  height: 40px;
+  background-color: #4caf75;
+  border: none;
+  color: white;
+  text-align: center;
+  font-size: 16px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  border-radius: 12px;
 }

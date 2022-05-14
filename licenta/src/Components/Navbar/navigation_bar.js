@@ -9,7 +9,7 @@ function Nav_bar(){
         <h4> <Link className="link" to="/detalii">Detalii Afine</Link> </h4>
         <h4> <Link className="link" to="/cules">Cules</Link> </h4>
         <h4> <Link className="link" to="/fertilizare">Fertilizare</Link> </h4>
-        <h4> <Link className="link" to="/test">test api</Link> </h4>
+        {/* <h4> <Link className="link" to="/test">test api</Link> </h4> */}
 
 
     </nav>

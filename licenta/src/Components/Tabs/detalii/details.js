@@ -1,158 +1,260 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import Box from '@mui/material/Box';
-import Collapse from '@mui/material/Collapse';
-import IconButton from '@mui/material/IconButton';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { Form } from 'react-bootstrap';
-import Button from '@mui/material/Button';
-import { makeStyles } from '@material-ui/core/styles';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { useState, useEffect } from 'react';
+import TextField from '@mui/material/TextField';
+import { MenuItem } from '@mui/material';
+import TextareaAutosize from '@mui/material/TextareaAutosize';
+import MuiAlert from '@mui/material/Alert';
+import Table from 'react-bootstrap/Table'
 import './details.css'
 import axios from 'axios';
 
 
-const useRowStyles = makeStyles({
-  root: {
-    '& > *': {
-      borderBottom: 'unset',
-    },
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 500,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 5,
+};
+
+const randuri = [
+  {
+    value: '1',
+    label: 'Randul 1',
   },
+  {
+    value: '2',
+    label: 'Randul 2',
+  },{
+    value: '3',
+    label: 'Randul 3',
+  },{
+    value: '4',
+    label: 'Randul 4',
+  },{
+    value: '5',
+    label: 'Randul 5',
+  },
+];
+
+const plantatii = [
+  {
+    value: '1',
+    label: 'Plantatia 1',
+  },
+  {
+    value: '2',
+    label: 'Plantatia 2',
+  },{
+    value: '3',
+    label: 'Plantatia 3',
+  },
+]
+
+const plante = [
+  {
+    value: '1',
+    label: 'Planta 1',
+  },
+  {
+    value: '2',
+    label: 'Planta 2',
+  },{
+    value: '3',
+    label: 'Planta 3',
+  },
+]
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-function createData(name){
-  return{
-    name,
-  };
-}
 
-function Row(props) {
+export default function Details() {
 
-  const { row } = props;
-  const [open, setOpen] = React.useState(false);
-  const classes = useRowStyles();
-  const [holder, setHolder] = React.useState('holder');
+  const [rand, setRand] = React.useState('');
 
-  
+  const [plantatie, setPlantatie] = React.useState('');
+
   const [problem, setProblem] = React.useState('');
+
+  const [planta, setPlanta] = React.useState('');
 
   const handleChangeProblem = (event) => {
     setProblem(event.target.value);
   }
-  const submit = (event) => {
-    event.preventDefault();
-    const payload = {
-      problema: problem
-    };
-  
-    axios({
-      url: 'http://localhost:8080/api/save',
-      method: 'POST',
-      data: payload
-    })
-    .then(() =>{
-      console.log('Data has been set');
-    })
-    .catch(()=> {
-      console.log('error')
-    });;
-  }
 
+  const handleChangeRand = (event) => {
+      setRand(event.target.value);
+};
 
-  return (
-    <React.Fragment>
-      <TableRow className={classes.root}>
-        <TableCell>
-          <IconButton aria-label="expand row" size="medium" onClick={() => setOpen(!open)}>
-            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-          </IconButton>
-        </TableCell>
-        <TableCell component="th" scope="row" >
-          {row.name}
-        </TableCell>
+  const handleChangePlantatie = (event) => {
+      setPlantatie(event.target.value);
+};
+  const handleChangePlanta = (event) => {
+  setPlanta(event.target.value);
+};
 
+const submit = (event) => {
+  event.preventDefault();
+  const payload = {
+    problem:problem,
+    plantatie: plantatie,
+    rand: rand,
+    planta:planta,
+  };
+  setProblem('');
+  setPlantatie('');
+  setRand('');
+  setProblem('');
 
-      </TableRow>
-
-      <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={4}>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box margin={1}>
-              <Typography variant="h6" gutterBottom>
-                Probleme gasite la o planta de pe rand:
-              </Typography>
-              <Table>
-                <TableBody>
-
-                <form>
-                  <div className='form-input'>
-
-                    <textarea
-                    placeholder={holder}
-                    name="problem"
-                    cols="30"
-                    rows="10"
-                    value={problem}
-                    onChange={handleChangeProblem}
-                    >
-
-                    </textarea>
-                  </div>
-
-                </form>
-
-
-                </TableBody>
-              </Table>
-            </Box>
-          </Collapse>
-        </TableCell>
-      </TableRow>
-    </React.Fragment>
-  );
+  axios({
+    url: 'http://localhost:8080/api/savepb',
+    method: 'POST',
+    data: payload
+  })
+  .then(() =>{
+    console.log('Data has been set');
+  })
+  .catch(()=> {
+    console.log('error')
+  });;
 }
 
-const rows = [
-  createData('Randul 1'),
-  createData('Randul 2'),
-  createData('Randul 3'),
-  createData('Randul 4'),
-  createData('Randul 5'),
-  createData('Randul 6'),
-];
+console.log('problem: ',problem ,'Plantatia: ',plantatie, ' Rand: ', rand);
+
+const [data, setProblems] = useState([])
+
+useEffect(() => {
+  fetch('http://localhost:8080/api/problems')
+  .then((res) =>
+      res.json())
+
+  .then((response) => {
+    setProblems(response);
+  })
+}, [])
+  console.log('DDATA', data)
 
 
+  function DeleteUser(id){
+    var new_list = [...data];
+    console.log('newlist:', new_list);
+    var index = 0;
+    for (var i = 0; i < data.length; i++){
+      if(data[i]._id == id){
+        index = i;
+      }
+    }
   
-export default function Details() {
+    if (index !== -1) {
+      new_list.splice(index, 1);
+      setProblems(new_list);
+    }
+  }
+
   return (
 
-      <div className='center-table'>
-        <TableContainer component={Paper} >
-          <Table aria-label="collapsible table">
-            <TableHead>
-              <TableRow>
-                <TableCell />
-                <TableCell> Plantatia 1</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows.map((row) => (
-                <Row key={row.name} row={row} />
+    <div>
+
+      <form onSubmit={submit}>
+            <div className='center2'>
+            <TextField 
+            select
+            required
+            label="Plantatia"
+            value={plantatie}
+            onChange={handleChangePlantatie}
+
+              >
+            {plantatii.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
               ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+            </TextField>
+
+            <TextField 
+            select
+            required
+            label="Rand"
+            value={rand}
+            onChange={handleChangeRand}
+              >
+            {randuri.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+              ))}
+            </TextField>
+
+            <TextField 
+            select
+            required
+            label="Planta"
+            value={planta}
+            onChange={handleChangePlanta}
+              >
+            {plante.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+              ))}
+            </TextField>
+
+            </div>
+
+            <TextareaAutosize
+              onChange={handleChangeProblem}
+              minRows={4}
+              required
+              value={problem}
+              placeholder="Scrie problema"
+              style={{ width: 350 }}
+            />
+            <button className='submit_button'> Submit </button>
+
+      </form>
+      <div className='center-table'>
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>Plantatia</th>
+              <th>Randul</th>
+              <th>Planta</th>
+              <th align="center">Problema</th>
+              <th>Sterge</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            {data.map((item, i) => (
+                    <tr key={i} >
+                      <td align="center">{data[i].plantatie}</td>
+                      <td align="center">{data[i].rand}</td>
+                      <td align="center">{data[i].planta}</td>
+                      <td align="left">{data[i].problem}</td>
+                      <td align="center" onClick={() => DeleteUser(item._id)} > 
+                        <button type="button" class="btn btn-danger btn-sm">Delete</button> 
+                      </td>
+                    </tr>
+                ))}
+
+          </tbody>
+        </Table>
       </div>
-      
-    
+
+
+            {/* <Snackbar open={open_snackbar} autoHideDuration={8000} onClose={handleCloseSnackbar}>
+                    <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: '100%' }}>
+                      Datele au fost adaugate cu succes!!
+                    </Alert>
+            </Snackbar> */}
+            
+    </div>
   );
 }

@@ -15,7 +15,7 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Box from '@mui/material/Box';
 import './cules.css'
 import FormCules from './form';
-import culegatori_list from './form'
+import button from 'react-bootstrap';
 
 function Row(props) {
 
@@ -23,10 +23,9 @@ function Row(props) {
   const [open, setOpen] = React.useState(false);
   var total = 0;
   const [data, getData] = useState([])
-  const URL = 'http://localhost:8080/api/culegator';
 
   useEffect(() => {
-    fetch(URL)
+    fetch('http://localhost:8080/api/culegator')
     .then((res) =>
         res.json())
 
@@ -46,13 +45,49 @@ function Row(props) {
 
     }
 };
+const IfDelete = (item) => {
+  if (item.nume === row.nume) 
+  {
+    return <button type="button" class="btn btn-danger btn-sm">Delete</button>;
+  }else{
+    return '';
 
+  }
+};
+
+function DeleteUser(id){
+
+  alert(id)
+  // fetch(`http://localhost:8080/api/culegator/${id}`,{
+  //   method:'DELETE'
+  // }).then((result)=>{
+  //   result.json().then((resp)=>{
+  //     console.warn(resp)
+  //   })
+  // })
+
+
+  // var new_list = [...data];
+  // console.log('newlist:', new_list);
+  // var index = 0;
+  // for (var i = 0; i < data.length; i++){
+  //   if(data[i]._id == id){
+  //     index = i;
+  //   }
+  // }
+
+  // if (index !== -1) {
+  //   new_list.splice(index, 1);
+  //   getData(new_list);
+  // }
+
+}
   function getTotal(){
     for (var i = 0; i < data.length; i++) {
       if (data[i].nume === row.nume) 
       { 
       total = parseInt(total) + parseInt(data[i].kilograme);
-      console.log('total', total);
+      //console.log('total', total);
       }
     }
   }
@@ -95,6 +130,7 @@ getTotal();
                     <TableCell align="left"> Cantitate culeasa </TableCell>
                     <TableCell align="left"> Plantatia </TableCell>
                     <TableCell align="left"> Randul </TableCell>
+                    <TableCell  align="left"> Delete </TableCell>
 
                   </TableRow>
                 </TableHead>
@@ -107,6 +143,7 @@ getTotal();
                       <td align="center">{getTable(item).kilograme }</td>
                       <td align="center">{getTable(item).plantatie}</td>
                       <td align="center">{getTable(item).rand}</td>
+                      <td align="center" onClick={() => DeleteUser(item._id)} > {IfDelete(item)} </td>
 
                     </tr>
                 ))}
