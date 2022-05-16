@@ -2,7 +2,7 @@
 position: relative;
 display: flex;
 align-items: center;
-height: 60px;
+height: 100px;
 width: 100%;
 padding: 0.5rem 0rem;
 background-color: rgb(11, 153, 96);
@@ -10,7 +10,7 @@ color: black;
 box-shadow: 0 2px 2px 2px rgba(9, 9, 9, 0.23);
 }
 
-.brand-name {
+.logo {
 text-decoration: none;
 color: black;
 font-size: 1.3rem;
@@ -18,7 +18,7 @@ margin-left: 1rem;
 }
 
 .navigation-menu {
-margin-left: 25%;
+margin-left: 30%;
 }
 
 .navigation-menu ul {
@@ -34,10 +34,11 @@ margin: 0 1rem;
 .navigation-menu li a {
 display: block;
 width: 100%;
-color: aqua;
+color: rgb(116, 14, 183);
+font-size: x-large;
 }
 
-.hamburger {
+.menu {
 border: 0;
 height: 40px;
 width: 40px;
@@ -53,12 +54,12 @@ transform: translateY(-50%);
 display: none;
 }
 
-.hamburger:hover {
+.menu:hover {
 background-color: #6aaf26;
 }
 
 @media screen and (max-width: 550px) {
-.hamburger {
+.menu {
     display: block;
 }
 

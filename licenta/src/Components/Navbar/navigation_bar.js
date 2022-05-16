@@ -6,11 +6,11 @@ export default function Nav_bar() {
 
   return (
     <nav className="navigation">
-      <a href="/" className="brand-name">
+      <a href="/" className="logo">
         <img src="https://logopond.com/logos/88ebd3bee0a73daa733e824809d77759.png" width={50}/>
       </a>
       <button
-        className="hamburger"
+        className="menu"
         onClick={() => {
           setIsNavExpanded(!isNavExpanded);
         }}

@@ -14,8 +14,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Box from '@mui/material/Box';
 import './cules.css'
-import FormCules from '../cules/form';
-import button from 'react-bootstrap';
+
 
 function Row(props) {
 
@@ -218,9 +217,7 @@ export default function Total_cules() {
 
   return (
 
-
-      <div> 
-        <div className='center-table'>
+        <Box className='center-table'>
           <TableContainer component={Paper} >
             <Table aria-label="collapsible table">
               <TableHead>
@@ -239,10 +236,8 @@ export default function Total_cules() {
               </TableBody>
             </Table>
           </TableContainer>
-        </div>
-          
-      </div>
-      
+        </Box>
+                
     
   );
 }

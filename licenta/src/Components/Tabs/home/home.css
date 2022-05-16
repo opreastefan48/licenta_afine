@@ -1,0 +1,19 @@
+.images{
+  display: flex;
+  padding: 5%;
+}
+
+.image1{
+  display: flex;
+  margin: 10px;
+}
+
+.image2{
+  display: flex;
+  margin: 10px;
+}
+
+.image3{
+  display: flex;
+  margin: 10px;
+}
