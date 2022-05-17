@@ -1,3 +1,4 @@
+import { useState } from "react";
 import poza_detalii from './problem.png';
 import cules from './cules.png'
 import total from './total.png'

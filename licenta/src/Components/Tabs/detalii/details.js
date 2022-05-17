@@ -76,87 +76,99 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 export default function Details() {
 
-  const [problems, setProblems] = useState([
-    {
-      problem:'',
-      plantatie:'',
-      rand:'',
-      planta:''
-    }
-  ])
+  const [rand, setRand] = React.useState('');
 
-  const [Problem, setProblem] = useState(
-    {
-      problem:'',
-      plantatie:'',
-      rand:'',
-      planta:''
-    }
-  )
-  useEffect(() => {
-    getDataFromDb()
-  }, [])
+  const [plantatie, setPlantatie] = React.useState('');
 
-  function getDataFromDb(){
-    fetch('http://localhost:8080/api/problems' , {
-      headers : { 
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-       }
+  const [problem, setProblem] = React.useState('');
 
-    }).then(res => {
-      if(res.ok) {
-        return res.json()
+  const [planta, setPlanta] = React.useState('');
+
+  const handleChangeProblem = (event) => {
+    setProblem(event.target.value);
+  }
+
+  const handleChangeRand = (event) => {
+      setRand(event.target.value);
+};
+
+  const handleChangePlantatie = (event) => {
+      setPlantatie(event.target.value);
+};
+  const handleChangePlanta = (event) => {
+  setPlanta(event.target.value);
+};
+
+const submit = (event) => {
+  event.preventDefault();
+  const payload = {
+    problem:problem,
+    plantatie: plantatie,
+    rand: rand,
+    planta:planta,
+  };
+  setProblem('');
+  setPlantatie('');
+  setRand('');
+  setProblem('');
+
+  axios({
+    url: 'http://localhost:8080/api/savepb',
+    method: 'POST',
+    data: payload
+  })
+  .then(() =>{
+    console.log('Data has been set');
+  })
+  .catch(()=> {
+    console.log('error')
+  });;
+}
+
+console.log('problem: ',problem ,'Plantatia: ',plantatie, ' Rand: ', rand);
+
+const [data, setProblems] = useState([])
+
+useEffect(() => {
+  fetch('http://localhost:8080/api/problems')
+  .then((res) =>
+      res.json())
+
+  .then((response) => {
+    setProblems(response);
+  })
+}, [])
+  console.log('DDATA', data)
+
+
+  function DeleteUser(id){
+    var new_list = [...data];
+    console.log('newlist:', new_list);
+    var index = 0;
+    for (var i = 0; i < data.length; i++){
+      if(data[i]._id == id){
+        index = i;
       }
-    }).then(jsonRes => setProblems(jsonRes))
-  }
-
-  function handleChange(e) {
-    const {name, value} = e.target;
-    setProblem(prevInput => {
-      return(
-        {
-          ...prevInput,
-          [name]: value
-        }
-      )
-    })
-  }
-
-  function addProblem(e) {
-    e.preventDefault();
-    console.log("Problem added");
-    const newProblem = {
-      problem: Problem.problem,
-      plantatie: Problem.plantatie,
-      rand: Problem.rand,
-      planta: Problem.planta
     }
-
-    axios.post('http://localhost:8080/api/savepb', newProblem);
-    getDataFromDb();
+  
+    if (index !== -1) {
+      new_list.splice(index, 1);
+      setProblems(new_list);
+    }
   }
-
-  function DeleteUser(id) {
-    axios.delete('http://localhost:8080/api/delete/' + id);
-    console.log("Problem deleted");
-    getDataFromDb();
-  }
-
 
   return (
 
-    <div >
+    <div>
 
-      <form className='formtext'>
+      <form onSubmit={submit}>
             <div className='center2'>
             <TextField 
             select
             required
-            name='plantatie'
-            label="Plantatie"
-            value={Problem.plantatie}
-            onChange={handleChange}
+            label="Plantatia"
+            value={plantatie}
+            onChange={handleChangePlantatie}
 
               >
             {plantatii.map((option) => (
@@ -170,9 +182,8 @@ export default function Details() {
             select
             required
             label="Rand"
-            name = 'rand'
-            value={Problem.rand}
-            onChange={handleChange}
+            value={rand}
+            onChange={handleChangeRand}
               >
             {randuri.map((option) => (
               <MenuItem key={option.value} value={option.value}>
@@ -184,10 +195,9 @@ export default function Details() {
             <TextField 
             select
             required
-            name = 'planta'
             label="Planta"
-            value={Problem.planta}
-            onChange={handleChange}
+            value={planta}
+            onChange={handleChangePlanta}
               >
             {plante.map((option) => (
               <MenuItem key={option.value} value={option.value}>
@@ -199,15 +209,14 @@ export default function Details() {
             </div>
 
             <TextareaAutosize
-              onChange={handleChange}
+              onChange={handleChangeProblem}
               minRows={4}
               required
-              name = 'problem'
-              value={Problem.problem}
+              value={problem}
               placeholder="Scrie problema"
               style={{ width: 350 }}
             />
-            <button onClick={addProblem} className='submit_button'> Submit </button>
+            <button className='submit_button'> Submit </button>
 
       </form>
       <div className='center-table'>
@@ -223,14 +232,14 @@ export default function Details() {
           </thead>
           <tbody>
 
-            {problems.map((problem, i) => (
+            {data.map((item, i) => (
                     <tr key={i} >
-                      <td align="center">{problem.plantatie}</td>
-                      <td align="center">{problem.rand}</td>
-                      <td align="center">{problem.planta}</td>
-                      <td align="left">{problem.problem}</td>
-                      <td align="center" onClick={() => DeleteUser(problem._id)} > 
-                        <button type="button" className="btn btn-danger btn-sm">Delete</button> 
+                      <td align="center">{data[i].plantatie}</td>
+                      <td align="center">{data[i].rand}</td>
+                      <td align="center">{data[i].planta}</td>
+                      <td align="left">{data[i].problem}</td>
+                      <td align="center" onClick={() => DeleteUser(item._id)} > 
+                        <button type="button" class="btn btn-danger btn-sm">Delete</button> 
                       </td>
                     </tr>
                 ))}

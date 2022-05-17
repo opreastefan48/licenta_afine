@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
 import Table from '@mui/material/Table';
@@ -47,7 +48,7 @@ const getTable = (item) => {
 const IfDelete = (item) => {
   if (item.nume === row.nume) 
   {
-    return <button type="button" className="btn btn-danger btn-sm">Delete</button>;
+    return <button type="button" class="btn btn-danger btn-sm">Delete</button>;
   }else{
     return '';
 
@@ -70,7 +71,7 @@ function DeleteUser(id){
   console.log('newlist:', new_list);
   var index = 0;
   for (var i = 0; i < data.length; i++){
-    if(data[i]._id === id){
+    if(data[i]._id == id){
       index = i;
     }
   }
