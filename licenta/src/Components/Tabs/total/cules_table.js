@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
 import Table from '@mui/material/Table';
@@ -14,7 +13,25 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Box from '@mui/material/Box';
 import './cules.css'
+import Snackbar from '@mui/material/Snackbar';
+import axios from 'axios';
+import MuiAlert from '@mui/material/Alert';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Slide from '@mui/material/Slide';
 
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 function Row(props) {
 
@@ -48,40 +65,33 @@ const getTable = (item) => {
 const IfDelete = (item) => {
   if (item.nume === row.nume) 
   {
-    return <button type="button" class="btn btn-danger btn-sm">Delete</button>;
+    return <button type="button" className="btn btn-danger btn-sm">Delete</button>;
   }else{
     return '';
 
   }
 };
 
-function DeleteUser(id){
 
-  alert(id)
-  // fetch(`http://localhost:8080/api/culegator/${id}`,{
-  //   method:'DELETE'
-  // }).then((result)=>{
-  //   result.json().then((resp)=>{
-  //     console.warn(resp)
-  //   })
-  // })
+const [openSnackbarDelete, setOpenSnackbarDelete] = React.useState(false);
 
+  const handleClickSnackbarDelete = () => {
+    setOpenSnackbarDelete(true);
+  };
 
-  var new_list = [...data];
-  console.log('newlist:', new_list);
-  var index = 0;
-  for (var i = 0; i < data.length; i++){
-    if(data[i]._id == id){
-      index = i;
+  const handleCloseSnackbarDelete = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
     }
-  }
 
-  if (index !== -1) {
-    new_list.splice(index, 1);
-    getData(new_list);
-  }
+    setOpenSnackbarDelete(false);
+  };
 
-}
+  function DeleteUser(id) {
+    axios.delete('http://localhost:8080/api/deleteCules/' + id);
+    console.log("Problem deleted");
+    handleClickSnackbarDelete();
+  }
 
   function getTotal(){
     for (var i = 0; i < data.length; i++) {
@@ -92,8 +102,17 @@ function DeleteUser(id){
       }
     }
   }
-  
 getTotal();
+
+  const [openCheckDelete, setOpenCheckDelete] = React.useState(false);
+
+  const handleClickOpenCheckDelete = () => {
+    setOpenCheckDelete(true);
+  };
+
+  const handleCloseCheckDelete = () => {
+    setOpenCheckDelete(false);
+  };
 
   
   return (
@@ -144,9 +163,32 @@ getTotal();
                       <td align="center">{getTable(item).kilograme }</td>
                       <td align="center">{getTable(item).plantatie}</td>
                       <td align="center">{getTable(item).rand}</td>
-                      <td align="center" onClick={() => DeleteUser(item._id)} > {IfDelete(item)} </td>
-
+                      <td align="center" onClick={handleClickOpenCheckDelete} > {IfDelete(item)} </td>
+                        <Dialog
+                          open={openCheckDelete}
+                          TransitionComponent={Transition}
+                          keepMounted
+                          onClose={handleCloseCheckDelete}
+                          aria-describedby="alert-dialog-slide-description"
+                        >
+                          <DialogTitle>{"Sterge Kilograme"}</DialogTitle>
+                          <DialogContent>
+                            <DialogContentText id="alert-dialog-slide-description">
+                              Sunteti sigur ca vreti sa stergeti inregistrarea?
+                            </DialogContentText>
+                          </DialogContent>
+                          <DialogActions>
+                            <Button onClick={handleCloseCheckDelete}>Nu</Button>
+                            <Button onClick={() => DeleteUser(item._id)}>Da, sterge!</Button>
+                          </DialogActions>
+                        </Dialog>
+                        <Snackbar open={openSnackbarDelete} autoHideDuration={6000} onClose={handleCloseSnackbarDelete}>
+                          <Alert onClose={handleCloseSnackbarDelete} severity="error" sx={{ width: '100%' }}>
+                            Problema stearsa cu succes!
+                          </Alert>
+                        </Snackbar>
                     </tr>
+                    
                 ))}
 
                 </TableBody>

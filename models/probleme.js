@@ -5,8 +5,10 @@ const mongoose = require('mongoose');
 const Schema =mongoose.Schema;
 
 const ProblemaSchema = new Schema({
-    problema:String,
-
+    problem:String,
+    plantatie:String,
+    rand:String,
+    planta:String,
 })
 
 //Model
