@@ -5,6 +5,7 @@ const Names = require('../models/names');
 const Culegator = require('../models/culegator');
 const Problems = require('../models/probleme');
 
+
 //routes
 router.post('/save',  (req, res) =>{
     console.log('Data: ', req.body);
@@ -28,7 +29,8 @@ router.post('/save',  (req, res) =>{
 
 
 router.post('/savepb',  (req, res) =>{
-  console.log('Problems: ', req.body);
+
+  //console.log('Problems: ', req.body);
 
   const data = req.body;
 
@@ -77,6 +79,8 @@ router.get('/culegator',  (req, res) =>{
       })
 });
 
+
+
 router.get('/names',  (req, res) =>{
 
     Names.find({ })
@@ -90,20 +94,18 @@ router.get('/names',  (req, res) =>{
 
 router.get('/problems',  (req, res) =>{
 
-    Problems.find({ })
-        .then((data) =>{
-            console.log('Problems: ',data)
-            res.json(data);
-        })
-        .catch((error) =>{
-            console.log('error: ', error)
-        })
+    Problems.find().then(problems => res.json(problems));
   });
 
-router.delete("/api/problems/:id", async (req, res) => {
-    const deletedProblem = await Problems.findByIdAndDelete(req.params.id);
-    res.send(deletedProblem);
-  });
-
+router.delete('/delete/:id', function(req, res) {
+    const id = req.params.id;
+    Problems.findByIdAndDelete({_id: id}, function(err) {
+        if(!err) {
+            console.log("Problem deleted");
+        } else {
+            console.log(err);
+        }
+    })
+});
 
 module.exports = router;
