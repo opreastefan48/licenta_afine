@@ -163,34 +163,19 @@ getTotal();
                       <td align="center">{getTable(item).kilograme }</td>
                       <td align="center">{getTable(item).plantatie}</td>
                       <td align="center">{getTable(item).rand}</td>
-                      <td align="center" onClick={handleClickOpenCheckDelete} > {IfDelete(item)} </td>
-                        <Dialog
-                          open={openCheckDelete}
-                          TransitionComponent={Transition}
-                          keepMounted
-                          onClose={handleCloseCheckDelete}
-                          aria-describedby="alert-dialog-slide-description"
-                        >
-                          <DialogTitle>{"Sterge Kilograme"}</DialogTitle>
-                          <DialogContent>
-                            <DialogContentText id="alert-dialog-slide-description">
-                              Sunteti sigur ca vreti sa stergeti inregistrarea?
-                            </DialogContentText>
-                          </DialogContent>
-                          <DialogActions>
-                            <Button onClick={handleCloseCheckDelete}>Nu</Button>
-                            <Button onClick={() => DeleteUser(item._id)}>Da, sterge!</Button>
-                          </DialogActions>
-                        </Dialog>
-                        <Snackbar open={openSnackbarDelete} autoHideDuration={6000} onClose={handleCloseSnackbarDelete}>
-                          <Alert onClose={handleCloseSnackbarDelete} severity="error" sx={{ width: '100%' }}>
-                            Problema stearsa cu succes!
-                          </Alert>
-                        </Snackbar>
+                      <td align="center" onClick={() => DeleteUser(item._id)} > {IfDelete(item)} 
+                      
+                      <Snackbar open={openSnackbarDelete} autoHideDuration={6000} onClose={handleCloseSnackbarDelete}>
+                        <Alert onClose={handleCloseSnackbarDelete} severity="error" sx={{ width: '100%' }}>
+                          Problema stearsa cu succes!
+                        </Alert>
+                      </Snackbar>
+      </td>
+                        
                     </tr>
                     
                 ))}
-
+                
                 </TableBody>
 
               </Table>
@@ -198,6 +183,7 @@ getTotal();
           </Collapse>
         </TableCell>
       </TableRow>
+      
     </React.Fragment>
   );
 }

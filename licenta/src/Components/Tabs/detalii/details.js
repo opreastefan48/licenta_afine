@@ -143,7 +143,7 @@ export default function Details() {
       rand: Problem.rand,
       planta: Problem.planta
     }
-
+    setProblem('');
     axios.post('http://localhost:8080/api/savepb', newProblem);
     handleClickSnackbarAdd();
     getDataFromDb();
@@ -151,9 +151,7 @@ export default function Details() {
 
   function DeleteUser(id) {
     axios.delete('http://localhost:8080/api/deletePB/' + id);
-    console.log("Problem deleted");
-    getDataFromDb();
-    handleClose();
+    console.log(id, " deleted");
     handleClickSnackbarDelete();
   }
 
@@ -288,31 +286,14 @@ export default function Details() {
                       <td align="center">{problem.planta}</td>
                       <td align="left">{problem.problem}</td>
                       <td align="center" onClick={handleClickOpen} > 
-                        <button type="button" className="btn btn-danger btn-sm">Delete</button> 
-                      </td>
-                        <Dialog
-                            open={open}
-                            TransitionComponent={Transition}
-                            keepMounted
-                            onClose={handleClose}
-                            aria-describedby="alert-dialog-slide-description"
-                          >
-                            <DialogTitle>{"STERGERE?"}</DialogTitle>
-                            <DialogContent>
-                              <DialogContentText id="alert-dialog-slide-description">
-                                Sunteti sigur ca doriti sa stergeti problema??
-                              </DialogContentText>
-                            </DialogContent>
-                            <DialogActions>
-                              <Button onClick={handleClose}>NU</Button>
-                              <Button onClick={() => DeleteUser(problem._id)}>DA</Button>
-                            </DialogActions>
-                        </Dialog>
+                        <button onClick={() => DeleteUser(problem._id)} type="button" className="btn btn-danger btn-sm">Delete</button> 
+                        
                               <Snackbar open={openSnackbarDelete} autoHideDuration={6000} onClose={handleCloseSnackbarDelete}>
                                 <Alert onClose={handleCloseSnackbarDelete} severity="error" sx={{ width: '100%' }}>
                                   Problema stearsa cu succes!
                                 </Alert>
                               </Snackbar>
+                      </td>
                     </tr>
                     
                 ))}
