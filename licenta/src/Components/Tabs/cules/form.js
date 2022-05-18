@@ -103,7 +103,7 @@ const submit = (event) => {
   setRand('');
 
   axios({
-    url: 'http://localhost:8080/api/save',
+    url: 'https://licenta-oprea-stefan.herokuapp.com/api/save',
     method: 'POST',
     data: payload
   })
@@ -136,7 +136,7 @@ const addName = (event) => {
   };
   setNew_Name('');
   axios({
-    url: 'http://localhost:8080/api/save_names',
+    url: 'https://licenta-oprea-stefan.herokuapp.com/api/save_names',
     method: 'POST',
     data: payload
   })
@@ -150,7 +150,7 @@ const addName = (event) => {
 
 
     const [culegatori_list, getCulegatori_list] = useState([])
-    const URL = 'http://localhost:8080/api/names';
+    const URL = 'https://licenta-oprea-stefan.herokuapp.com/api/names';
     useEffect(() => {
         fetchData()
     }, [])

@@ -41,7 +41,7 @@ function Row(props) {
   const [data, getData] = useState([])
 
   useEffect(() => {
-    fetch('http://localhost:8080/api/culegator')
+    fetch('https://licenta-oprea-stefan.herokuapp.com/api/culegator')
     .then((res) =>
         res.json())
 
@@ -88,7 +88,7 @@ const [openSnackbarDelete, setOpenSnackbarDelete] = React.useState(false);
   };
 
   function DeleteUser(id) {
-    axios.delete('http://localhost:8080/api/deleteCules/' + id);
+    axios.delete('https://licenta-oprea-stefan.herokuapp.com/api/deleteCules/' + id);
     console.log("Problem deleted");
     handleClickSnackbarDelete();
   }
@@ -192,12 +192,12 @@ export default function Total_cules() {
 
 
     const [culegatori_list, getCulegatori_list] = useState([])
-    const URL_names = 'http://localhost:8080/api/names';
+    const URL_names = 'https://licenta-oprea-stefan.herokuapp.com/api/names';
     const [data, getData] = useState([])
     var total = 0;
 
   useEffect(() => {
-    fetch('http://localhost:8080/api/culegator')
+    fetch('https://licenta-oprea-stefan.herokuapp.com/api/culegator')
     .then((res) =>
         res.json())
 

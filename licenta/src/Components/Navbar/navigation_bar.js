@@ -7,7 +7,7 @@ export default function Nav_bar() {
   return (
     <nav className="navigation">
       <a href="/" className="logo">
-        <img src="https://logopond.com/logos/88ebd3bee0a73daa733e824809d77759.png" width={50}/>
+        <img src="https://logopond.com/logos/88ebd3bee0a73daa733e824809d77759.png" width={100}/>
       </a>
       <button
         className="menu"

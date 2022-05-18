@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/static/css/main.654100fd.css",
+    "main.js": "/static/js/main.fc2b9185.js",
+    "static/media/cules.png": "/static/media/cules.cd2d7e6a41975af7a84b.png",
+    "static/media/total.png": "/static/media/total.a65fc0ab2e846c74946d.png",
+    "static/media/problem.png": "/static/media/problem.54801bdc630f869e02bb.png",
+    "static/media/fertilizare.png": "/static/media/fertilizare.113651593dcd70b180fd.png",
+    "index.html": "/index.html",
+    "main.654100fd.css.map": "/static/css/main.654100fd.css.map",
+    "main.fc2b9185.js.map": "/static/js/main.fc2b9185.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.654100fd.css",
+    "static/js/main.fc2b9185.js"
+  ]
+}

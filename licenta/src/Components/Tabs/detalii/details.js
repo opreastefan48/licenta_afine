@@ -109,7 +109,7 @@ export default function Details() {
   }, [])
 
   function getDataFromDb(){
-    fetch('http://localhost:8080/api/problems' , {
+    fetch('https://licenta-oprea-stefan.herokuapp.com/api/problems' , {
       headers : { 
         'Content-Type': 'application/json',
         'Accept': 'application/json'
@@ -144,13 +144,13 @@ export default function Details() {
       planta: Problem.planta
     }
     setProblem('');
-    axios.post('http://localhost:8080/api/savepb', newProblem);
+    axios.post('https://licenta-oprea-stefan.herokuapp.com/api/savepb', newProblem);
     handleClickSnackbarAdd();
     getDataFromDb();
   }
 
   function DeleteUser(id) {
-    axios.delete('http://localhost:8080/api/deletePB/' + id);
+    axios.delete('https://licenta-oprea-stefan.herokuapp.com/api/deletePB/' + id);
     console.log(id, " deleted");
     handleClickSnackbarDelete();
   }

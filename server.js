@@ -30,4 +30,10 @@ app.options('*', cors());
 app.use(morgan('tiny'));
 app.use('/api',routes);
 
+if(process.env.NODE_ENV === 'production') {
+    app.use(express.static('licenta/build'));
+    app.get("*", (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'licenta', 'build', 'index.html'));
+    })
+}
 app.listen(PORT, console.log(`Server is starting at ${PORT}`))

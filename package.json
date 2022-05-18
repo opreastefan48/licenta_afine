@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
     "frontend": "cd licenta && npm start",
-    "licenta": "concurrently \"nodemon server.js\" \" npm run frontend\""
+    "licenta": "concurrently \"nodemon server.js\" \" npm run frontend\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix licenta "
   },
   "keywords": [],
   "author": "",
