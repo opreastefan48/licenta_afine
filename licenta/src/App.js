@@ -6,7 +6,6 @@ import Fertilizare from './Components/Tabs/fertilizare/table'
 import Details from './Components/Tabs/detalii/details'
 import Total_cules from './Components/Tabs/total/cules_table'
 import Home from './Components/Tabs/home/home'
-
 import "./style.css";
 
 function App() {

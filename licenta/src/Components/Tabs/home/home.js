@@ -1,62 +1,68 @@
-import poza_detalii from './problem.png';
 import cules from './cules.png'
+import problem from './problem.png'
 import total from './total.png'
-import fertil from './fertilizare.png'
+import ferti from './fertilizare.png'
 import './home.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Carousel } from 'react-bootstrap';
-import { Box } from '@mui/system';
 
 export default function Home() {
   return(
-    <Box className='box'>
-{/* interval={1000} */}
-      <Carousel>
+      <Carousel className='box' fade>
           <Carousel.Item >   
           <a href="/detalii">
             <img
-                className="d-block  image"
-                src={poza_detalii}
-                alt="First slide"
-                
+                className="d-block w-100"
+                src={problem}                
               />          
           </a>
             <Carousel.Caption>
-              <h3>Probleme</h3>
-              <p>Adauga sau vizioneaza problemele existente din plantatie.</p>
+              <h1 className='text'>Probleme</h1>
+              <p className='text'>Adauga sau vizioneaza problemele existente din plantatie.</p>
+            </Carousel.Caption>
+          </Carousel.Item>
+          
+          <Carousel.Item>
+          <a href="/cules">
+
+            <img
+              className="d-block w-100"
+              src={cules}
+            />
+          </a>
+            <Carousel.Caption>
+              <h1 className='text'>Adauga kilograme.</h1>
+              <p className='text'>Adauga cantitaea culeasa pentru un culegator.</p>
             </Carousel.Caption>
           </Carousel.Item>
           
           <Carousel.Item>
           <a href="/total">
-
             <img
-              className="d-block  image"
+              className="d-block w-100"
               src={total}
-              alt="Second slide"
             />
           </a>
             <Carousel.Caption>
-              <h3>Cantitate culeasa</h3>
-              <p>Vizioneaza cantitatea totala culeasa, si cantitatea culeasa de fiecare culegator.</p>
+            <h1 className='text'>Cantitate culeasa</h1>
+              <p className='text'>Vizioneaza cantitatea totala culeasa, si cantitatea culeasa de fiecare culegator.</p>
             </Carousel.Caption>
           </Carousel.Item>
-          
+
           <Carousel.Item>
           <a href="/fertilizare">
             <img
-              className="d-block  image"
-              src={fertil}
-              alt="Third slide"
+              className="d-block w-100"
+              src={ferti}
             />
           </a>
             <Carousel.Caption>
-              <h3>Fertilizare</h3>
-              <p>Programul de fertilizare pe saptamani.</p>
+              <h1 className='text'>Fertilizare</h1>
+              <p className='text'>Programul de fertilizare pe saptamani.</p>
             </Carousel.Caption>
           </Carousel.Item>
       </Carousel>
         
-    </Box>
+
   );
 }

@@ -72,7 +72,6 @@ export default function Fertilizare() {
           <th colSpan={4} className="text-center">Iunie</th>
           <th colSpan={4} className="text-center">Iulie</th>
           <th colSpan={3} className="text-center">August</th>
-          <th rowSpan={2}>Total</th>
           </tr>
             <tr className=" p-3 mb-2 bg-secondary text-black">
               <th>Sapt. 14</th>
@@ -121,7 +120,6 @@ export default function Fertilizare() {
               <td> 6 </td>
               <td> 6 </td>
               <td>  </td>
-              <td className="bg-danger text-black"> 120 </td>
             </tr>
 
             <tr >
@@ -144,7 +142,6 @@ export default function Fertilizare() {
               <td> 6 </td>
               <td> 6 </td>
               <td>  </td>
-              <td className="bg-danger text-black"> 120 </td>
 
             </tr> 
 
@@ -169,7 +166,6 @@ export default function Fertilizare() {
               <td>  </td>
               <td>  </td>
               <td>  </td>
-              <td className="bg-danger text-black"> 120 </td>
 
             </tr> 
 
@@ -193,7 +189,6 @@ export default function Fertilizare() {
               <td>  </td>
               <td>  </td>
               <td>  </td>
-              <td className="bg-danger text-black"> 120 </td>
 
             </tr>
 
@@ -217,7 +212,6 @@ export default function Fertilizare() {
               <td> 6 </td>
               <td>  </td>
               <td>  </td>
-              <td className="bg-danger text-black"> 120 </td>
 
             </tr>
 
@@ -241,7 +235,6 @@ export default function Fertilizare() {
               <td> 0.7 </td>
               <td>  </td>
               <td>  </td>
-              <td className="bg-danger text-black"> 120 </td>
 
             </tr>
 
@@ -266,7 +259,6 @@ export default function Fertilizare() {
               <td> 0.7 </td>
               <td>  </td>
               <td>  </td>
-              <td className="bg-danger text-black"> 120 </td>
 
             </tr>
 
@@ -290,7 +282,6 @@ export default function Fertilizare() {
               <td>  </td>
               <td>  </td>
               <td>  </td>
-              <td className="bg-danger text-black"> 120 </td>
 
             </tr>
 
@@ -315,7 +306,6 @@ export default function Fertilizare() {
               <td>  </td>
               <td>  </td>
               <td>  </td>
-              <td className="bg-danger text-black"> 120 </td>
 
             </tr>
 
@@ -339,8 +329,6 @@ export default function Fertilizare() {
               <td> 6 </td>
               <td>  </td>
               <td>  </td>
-              <td className="bg-danger text-black"> 120 </td>
-
             </tr>
 
           </tbody>
@@ -693,7 +681,7 @@ export default function Fertilizare() {
             </tr>
           </thead>
 
-          <tbody className="text-center p-3 mb-2 bg-success text-black">
+          <tbody className="text-center p-3 mb-2 bg-info text-black">
 
             <tr>
               <td>Plantagrow</td>
@@ -947,7 +935,7 @@ export default function Fertilizare() {
             </tr>
           </thead>
 
-          <tbody className="text-center p-3 mb-2 bg-success text-blacks">
+          <tbody className="text-center p-3 mb-2 bg-info text-blacks">
 
             <tr>
               <td>Plantagrow</td>

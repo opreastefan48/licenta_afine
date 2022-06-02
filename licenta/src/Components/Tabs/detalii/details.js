@@ -10,6 +10,8 @@ import { Button, Modal } from 'react-bootstrap';
 import './details.css'
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import plantatii from '../plantantii'
+import randuri from '../randuri';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -31,53 +33,6 @@ const style = {
   p: 5,
 };
 
-const randuri = [
-  {
-    value: '1',
-    label: 'Randul 1',
-  },
-  {
-    value: '2',
-    label: 'Randul 2',
-  },{
-    value: '3',
-    label: 'Randul 3',
-  },{
-    value: '4',
-    label: 'Randul 4',
-  },{
-    value: '5',
-    label: 'Randul 5',
-  },
-];
-
-const plantatii = [
-  {
-    value: '1',
-    label: 'Plantatia 1',
-  },
-  {
-    value: '2',
-    label: 'Plantatia 2',
-  },{
-    value: '3',
-    label: 'Plantatia 3',
-  },
-]
-
-const plante = [
-  {
-    value: '1',
-    label: 'Planta 1',
-  },
-  {
-    value: '2',
-    label: 'Planta 2',
-  },{
-    value: '3',
-    label: 'Planta 3',
-  },
-]
 
 
 
@@ -233,18 +188,14 @@ export default function Details() {
             </TextField>
 
             <TextField 
-            select
             required
+            type="number"
+            autoComplete='off'
             name = 'planta'
             label="Planta"
             value={Problem.planta}
             onChange={handleChange}
               >
-            {plante.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
-              </MenuItem>
-              ))}
             </TextField>
 
             </div>

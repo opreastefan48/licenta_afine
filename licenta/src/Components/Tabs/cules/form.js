@@ -10,7 +10,8 @@ import './cules.css'
 import axios from 'axios';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
-
+import plantatii from '../plantantii'
+import randuri from '../randuri';
 
 
 const style = {
@@ -25,39 +26,6 @@ const style = {
   p: 5,
 };
 
-const randuri = [
-  {
-    value: '1',
-    label: 'Randul 1',
-  },
-  {
-    value: '2',
-    label: 'Randul 2',
-  },{
-    value: '3',
-    label: 'Randul 3',
-  },{
-    value: '4',
-    label: 'Randul 4',
-  },{
-    value: '5',
-    label: 'Randul 5',
-  },
-];
-
-const plantatii = [
-  {
-    value: '1',
-    label: 'Plantatia 1',
-  },
-  {
-    value: '2',
-    label: 'Plantatia 2',
-  },{
-    value: '3',
-    label: 'Plantatia 3',
-  },
-]
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
