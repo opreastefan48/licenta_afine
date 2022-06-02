@@ -27,10 +27,10 @@ export default function Nav_bar() {
             <a href="/">Home</a>
           </li>
           <li>
-            <a href="/detalii">Detalii</a>
+            <a href="/detalii">Probleme</a>
           </li>
           <li>
-            <a href="/cules">Adauga Cantitate</a>
+            <a href="/cules">Adauga Cantitate Culeasa</a>
           </li>
           <li>
             <a href="/total">Total Cules</a>

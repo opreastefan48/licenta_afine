@@ -1,7 +1,7 @@
 
 
 .spatiu{
-  padding: 20vh;
+  padding: 10px;
 }
 
 .center-table{
@@ -65,4 +65,10 @@ form{
   position: fixed;
   bottom: 100px;
   right: 100px;
+}
+
+p  
+{  
+  color:#ffc0cb;  
+  font-weight:bold;  
 }

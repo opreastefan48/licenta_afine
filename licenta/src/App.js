@@ -11,24 +11,28 @@ import "./style.css";
 
 function App() {
   return (
-      <Router>
-          <Nav_bar />
-        <Routes>
-            <Route path='/' element={<Home/>}></Route>
+    <div style={{ backgroundImage: "url(/bg.png)" }}>
+          <Router>
+              <Nav_bar />
+            <Routes>
+                <Route path='/' element={<Home/>}></Route>
 
-            <Route path='/cules' element={<FormCules />}></Route>
+                <Route path='/cules' element={<FormCules />}></Route>
 
-            <Route path='/total' element={<Total_cules/>}> </Route>
+                <Route path='/total' element={<Total_cules/>}> </Route>
 
-            <Route path='/fertilizare' element={<Fertilizare/>}> </Route>
+                <Route path='/fertilizare' element={<Fertilizare/>}> </Route>
 
-            <Route path='/detalii' element={<Details/>}> </Route>
+                <Route path='/detalii' element={<Details/>}> </Route>
 
-        </Routes>
+            </Routes>
+          </Router>
+
+    </div>
+      
         
 
 
-      </Router>
 
   )
 

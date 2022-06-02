@@ -16,12 +16,8 @@ import './cules.css'
 import Snackbar from '@mui/material/Snackbar';
 import axios from 'axios';
 import MuiAlert from '@mui/material/Alert';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Modal, Button as Button_bootstrap } from 'react-bootstrap';
 import Slide from '@mui/material/Slide';
 
 
@@ -40,7 +36,7 @@ function Row(props) {
   var total = 0;
   const [data, getData] = useState([])
 
-  useEffect(() => {
+  function GetDataFromDB(){
     fetch('https://licenta-oprea-stefan.herokuapp.com/api/culegator')
     .then((res) =>
         res.json())
@@ -48,6 +44,9 @@ function Row(props) {
     .then((response) => {
         getData(response);
     })
+  }
+  useEffect(() => {
+    GetDataFromDB();
   }, [])
   //console.log("DATA: ", data)
 
@@ -62,10 +61,15 @@ const getTable = (item) => {
   }
 };
 
+const [show, setShow] = useState(false);
+
+  const handleCloseModal = () => setShow(false);
+  const handleShowModal = () => setShow(true);
+
 const IfDelete = (item) => {
   if (item.nume === row.nume) 
   {
-    return <button type="button" className="btn btn-danger btn-sm">Delete</button>;
+    return <button onClick={handleShowModal} type="button" className="btn btn-danger btn-sm ">Delete</button>;
   }else{
     return '';
 
@@ -87,10 +91,16 @@ const [openSnackbarDelete, setOpenSnackbarDelete] = React.useState(false);
     setOpenSnackbarDelete(false);
   };
 
+  function refreshPage() {
+    window.location.reload(false);
+  }
+
   function DeleteUser(id) {
     axios.delete('https://licenta-oprea-stefan.herokuapp.com/api/deleteCules/' + id);
     console.log("Problem deleted");
     handleClickSnackbarDelete();
+    setTimeout(refreshPage, 1000);
+
   }
 
   function getTotal(){
@@ -128,7 +138,7 @@ getTotal();
           {row.nume}
           </TableCell>
 
-          <TableCell component="th" scope="row" >
+          <TableCell align='center' component="th" scope="row" >
             {total}
           </TableCell>
 
@@ -146,11 +156,11 @@ getTotal();
                 <TableHead>
                   <TableRow>
 
-                    <TableCell align="left" > Date </TableCell>
-                    <TableCell align="left"> Cantitate culeasa </TableCell>
-                    <TableCell align="left"> Plantatia </TableCell>
-                    <TableCell align="left"> Randul </TableCell>
-                    <TableCell  align="left"> Delete </TableCell>
+                    <TableCell align="center" > Data si ora salvarii cantitatii </TableCell>
+                    <TableCell align="center"> Cantitate culeasa </TableCell>
+                    <TableCell align="center"> Plantatia </TableCell>
+                    <TableCell align="center"> Randul </TableCell>
+                    <TableCell  align="center"> X </TableCell>
 
                   </TableRow>
                 </TableHead>
@@ -163,8 +173,22 @@ getTotal();
                       <td align="center">{getTable(item).kilograme }</td>
                       <td align="center">{getTable(item).plantatie}</td>
                       <td align="center">{getTable(item).rand}</td>
-                      <td align="center" onClick={() => DeleteUser(item._id)} > {IfDelete(item)} 
-                      
+                      <td align="center"> {IfDelete(item)} 
+
+                        <Modal show={show} onHide={handleCloseModal }>
+                            <Modal.Header closeButton>
+                              <Modal.Title>Confirmare stergere</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>Sunteti sigur ca doriti sa stergeti inregistrarea??</Modal.Body>
+                            <Modal.Footer>
+                              <Button_bootstrap variant="secondary" onClick={handleCloseModal }>
+                                NU STERGE!!
+                              </Button_bootstrap>
+                              <Button_bootstrap variant="danger" onClick={() => DeleteUser(item._id) }>
+                                DA, STERGE!!
+                              </Button_bootstrap>
+                            </Modal.Footer>
+                          </Modal>
                       <Snackbar open={openSnackbarDelete} autoHideDuration={6000} onClose={handleCloseSnackbarDelete}>
                         <Alert onClose={handleCloseSnackbarDelete} severity="error" sx={{ width: '100%' }}>
                           Problema stearsa cu succes!
@@ -249,10 +273,10 @@ export default function Total_cules() {
           <TableContainer component={Paper} >
             <Table aria-label="collapsible table">
               <TableHead>
-                <TableRow>
+                <TableRow className='table_row'>
                   <TableCell />
                   <TableCell>Nume culegator</TableCell>
-                  <TableCell align="left">Total (kg)</TableCell>
+                  <TableCell align="center">Total (kg)</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>

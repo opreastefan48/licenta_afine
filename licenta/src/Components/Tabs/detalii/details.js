@@ -4,16 +4,12 @@ import { MenuItem } from '@mui/material';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import MuiAlert from '@mui/material/Alert';
 import Table from 'react-bootstrap/Table'
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import Snackbar from '@mui/material/Snackbar';
+import { Button, Modal } from 'react-bootstrap';
 import './details.css'
 import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -98,7 +94,7 @@ export default function Details() {
 
   const [Problem, setProblem] = useState(
     {
-      problem:'',
+      problem:'  ',
       plantatie:'',
       rand:'',
       planta:''
@@ -109,17 +105,10 @@ export default function Details() {
   }, [])
 
   function getDataFromDb(){
-    fetch('https://licenta-oprea-stefan.herokuapp.com/api/problems' , {
-      headers : { 
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-       }
-
-    }).then(res => {
-      if(res.ok) {
-        return res.json()
-      }
-    }).then(jsonRes => setProblems(jsonRes))
+    axios.get('https://licenta-oprea-stefan.herokuapp.com/api/problems')
+    .then(function (response) {
+      setProblems(response.data)
+    })
   }
 
   function handleChange(e) {
@@ -146,13 +135,19 @@ export default function Details() {
     setProblem('');
     axios.post('https://licenta-oprea-stefan.herokuapp.com/api/savepb', newProblem);
     handleClickSnackbarAdd();
-    getDataFromDb();
+    setTimeout(refreshPage, 1000);
+  }
+
+  function refreshPage() {
+    window.location.reload(false);
   }
 
   function DeleteUser(id) {
     axios.delete('https://licenta-oprea-stefan.herokuapp.com/api/deletePB/' + id);
     console.log(id, " deleted");
     handleClickSnackbarDelete();
+    setTimeout(refreshPage, 1000);
+
   }
 
   const [open, setOpen] = React.useState(false);
@@ -195,6 +190,10 @@ export default function Details() {
     setOpenSnackbarDelete(false);
   };
 
+  const [show, setShow] = useState(false);
+
+  const handleCloseModal = () => setShow(false);
+  const handleShowModal = () => setShow(true);
 
   return (
 
@@ -256,7 +255,7 @@ export default function Details() {
               required
               name = 'problem'
               value={Problem.problem}
-              placeholder="Scrie problema"
+              placeholder="  Scrie problema"
               style={{ width: 350 }}
             />
             <button onClick={addProblem} className='submit_button'> Submit </button>
@@ -269,12 +268,12 @@ export default function Details() {
       <div className='center-table'>
         <Table striped bordered hover>
           <thead>
-            <tr>
-              <th>Plantatia</th>
-              <th>Randul</th>
-              <th>Planta</th>
+            <tr >
+              <th align='center'>Plantatia</th>
+              <th align='center'>Randul</th>
+              <th align='center'>Planta</th>
               <th align="center">Problema</th>
-              <th>Sterge</th>
+              <th align='center'>Sterge</th>
             </tr>
           </thead>
           <tbody>
@@ -286,8 +285,23 @@ export default function Details() {
                       <td align="center">{problem.planta}</td>
                       <td align="left">{problem.problem}</td>
                       <td align="center" onClick={handleClickOpen} > 
-                        <button onClick={() => DeleteUser(problem._id)} type="button" className="btn btn-danger btn-sm">Delete</button> 
-                        
+                        <button onClick={handleShowModal} type="button" className="btn btn-danger btn-sm">Delete</button> 
+                          
+                          <Modal show={show} onHide={handleCloseModal }>
+                            <Modal.Header closeButton>
+                              <Modal.Title>Confirmare stergere</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>A fost rezolvata problema?</Modal.Body>
+                            <Modal.Footer>
+                              <Button variant="secondary" onClick={handleCloseModal }>
+                                NU INCA!
+                              </Button>
+                              <Button variant="danger" onClick={() => DeleteUser(problem._id) }>
+                                DA, PROBLEMA A FOST REZOLVATA!
+                              </Button>
+                            </Modal.Footer>
+                          </Modal>
+
                               <Snackbar open={openSnackbarDelete} autoHideDuration={6000} onClose={handleCloseSnackbarDelete}>
                                 <Alert onClose={handleCloseSnackbarDelete} severity="error" sx={{ width: '100%' }}>
                                   Problema stearsa cu succes!

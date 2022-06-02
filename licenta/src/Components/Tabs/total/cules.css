@@ -60,3 +60,8 @@ form{
   cursor: pointer;
   border-radius: 12px;
 }
+
+.table_row{
+
+  background-color: rgb(160, 151, 151);
+}

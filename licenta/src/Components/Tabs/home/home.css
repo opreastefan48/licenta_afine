@@ -1,19 +1,13 @@
-.images{
+.box{
   display: flex;
-  padding: 5%;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5%;
 }
 
-.image1{
+.image{
   display: flex;
-  margin: 10px;
+  width: 500px;
+  height: 500px;
 }
 
-.image2{
-  display: flex;
-  margin: 10px;
-}
-
-.image3{
-  display: flex;
-  margin: 10px;
-}
