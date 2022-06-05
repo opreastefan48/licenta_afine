@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, {useState, useEffect } from 'react'
 import {BrowserRouter as Router,Route, Routes} from "react-router-dom";
 import Nav_bar from './Components/Navbar/navigation_bar';
 import FormCules from './Components/Tabs/cules/form';
@@ -10,22 +10,61 @@ import "./style.css";
 import Login from './Components/Tabs/login/login';
 
 function App() {
+  const [isloggedin, setIsLoggedIn]=useState()
+
   useEffect(() => {
     document.title = "Licenta Oprea Stefan"
+    setIsLoggedIn(JSON.parse(window.localStorage.getItem('isloggedin')))
+          console.log(isloggedin)
   }, [])
+
+  function LoggedinHome(){
+    if(isloggedin){
+      return <Home/>
+    }
+      else return <Login/>
+  }
+  function LoggedinCules(){
+    if(isloggedin){
+      return <FormCules/>
+    }
+      else return <Login/>
+  }
+  function LoggedinProbleme(){
+    if(isloggedin){
+      return <Probleme/>
+    }
+      else return <Login/>
+  }
+  function LoggedinFertilizare(){
+    if(isloggedin){
+      return <Fertilizare/>
+    }
+      else return <Login/>
+  }
+  function LoggedinTotal(){
+    if(isloggedin){
+      return <Total_cules/>
+    }
+      else return <Login/>
+  }
+  
+
   return (
     <Router>
         <Nav_bar />
       <Routes>
-          <Route path='/' element={<Home/>}/>
+          <Route path='/' element={LoggedinHome()}/>
 
-          <Route path='/cules' element={<FormCules />}/>
+          <Route path='/home' element={LoggedinHome()}/>
 
-          <Route path='/total' element={<Total_cules/>}/>
+          <Route path='/cules' element={LoggedinCules()}/>
 
-          <Route path='/fertilizare' element={<Fertilizare/>}/>
+          <Route path='/total' element={LoggedinTotal()}/>
 
-          <Route path='/probleme' element={<Probleme/>}/>
+          <Route path='/fertilizare' element={LoggedinFertilizare()}/>
+
+          <Route path='/probleme' element={LoggedinProbleme()}/>
 
           <Route path='/login' element={<Login/>}/>
 
