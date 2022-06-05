@@ -7,7 +7,7 @@ import Table from 'react-bootstrap/Table'
 import Slide from '@mui/material/Slide';
 import Snackbar from '@mui/material/Snackbar';
 import { Button, Modal } from 'react-bootstrap';
-import './details.css'
+import './probleme.css'
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import plantatii from '../plantantii'
@@ -36,7 +36,7 @@ const style = {
 
 
 
-export default function Details() {
+export default function Probleme() {
 
   const [problems, setProblems] = useState([
     {
@@ -154,7 +154,7 @@ export default function Details() {
 
     <div >
 
-      <form className='formtext'>
+      <form>
             <div className='center2'>
             <TextField 
             select

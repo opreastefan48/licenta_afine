@@ -1,7 +1,4 @@
-.formtext{
-  display: flex;
-  margin-top: 2%;
-}
+
 .center-table{
     display: flex;
     width: 50%;
@@ -11,7 +8,12 @@
     align-items: center;    
     margin-bottom: 10%;
 }
-
+.center2 {
+  display: flex;
+  margin-top: 2%;
+  justify-content: center;
+  align-items: center;
+}
 .submit_button{
   margin-top: 10px;
   width: 100px;
@@ -26,3 +28,8 @@
   border-radius: 12px;
 }
 
+@media(max-width: 1320px){
+  .center2 {
+    flex-direction: column!important;
+  }
+}

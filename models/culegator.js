@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 //schema
 const Schema =mongoose.Schema;
-const currentDate = new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric", hour:"numeric", minute:"numeric"}); 
+const currentDate = new Date().toLocaleDateString('en-us', {year:"numeric", month:"short", day:"numeric", hour:"numeric", minute:"numeric"}); 
 console.log('date: ', currentDate);
 const CulegatorSchema = new Schema({
     nume:String,

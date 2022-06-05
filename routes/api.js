@@ -4,25 +4,17 @@ const router = express.Router();
 const Names = require('../models/names');
 const Culegator = require('../models/culegator');
 const Problems = require('../models/probleme');
+const Account = require('../models/accounts');
 
 
 //routes
 router.post('/save',  (req, res) =>{
-    console.log('Data: ', req.body);
-
     const data = req.body;
-
     const newCulegator = new Culegator(data);
-
     newCulegator.save((error) =>{
         if(error){
             return res.status(500).json({msg:'SSorry, error saving data'});
         }
-
-        return res.json({
-            msg:' DATA SAVED TO DB'
-        });
-        
     });
     
 });
@@ -50,7 +42,7 @@ router.post('/savepb',  (req, res) =>{
   
 });
 
-router.post('/save_names',  (req, res) =>{
+router.post('/savse_names',  (req, res) =>{
     const data = req.body;
 
     const newName = new Names(data);
@@ -119,4 +111,15 @@ router.delete('/deleteCules/:id', function(req, res) {
     })
 });
 
+router.get('/getAccount',  (req, res) =>{
+
+    Account.find({ })
+        .then((data) =>{
+            res.json(data);
+        })
+        .catch((error) =>{
+            console.log('error: ', error)
+        })
+  });
+  
 module.exports = router;

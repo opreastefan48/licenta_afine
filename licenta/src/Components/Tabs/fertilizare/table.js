@@ -5,7 +5,7 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { Table } from 'react-bootstrap';
-
+import './table.css'
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -49,7 +49,7 @@ export default function Fertilizare() {
   };
 
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" centered>
           <Tab label="Fertilizare DUKE" {...a11yProps(0)} />

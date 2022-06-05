@@ -63,12 +63,18 @@ form{
 
 .fab_add{
   position: fixed;
-  bottom: 100px;
-  right: 100px;
+  bottom: 25%;
+  right: 15%;
 }
 
 p  
 {  
   color:#ffc0cb;  
   font-weight:bold;  
+}
+
+@media(max-width: 1320px){
+  .center1 {
+    flex-direction: column!important;
+  }
 }

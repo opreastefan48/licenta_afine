@@ -1,37 +1,36 @@
-import React from 'react';
+import React, { useEffect } from 'react'
 import {BrowserRouter as Router,Route, Routes} from "react-router-dom";
 import Nav_bar from './Components/Navbar/navigation_bar';
 import FormCules from './Components/Tabs/cules/form';
 import Fertilizare from './Components/Tabs/fertilizare/table'
-import Details from './Components/Tabs/detalii/details'
+import Probleme from './Components/Tabs/probleme/probleme'
 import Total_cules from './Components/Tabs/total/cules_table'
 import Home from './Components/Tabs/home/home'
 import "./style.css";
+import Login from './Components/Tabs/login/login';
 
 function App() {
+  useEffect(() => {
+    document.title = "Licenta Oprea Stefan"
+  }, [])
   return (
-    <div style={{ backgroundImage: "url(/bg.png)" }}>
-          <Router>
-              <Nav_bar />
-            <Routes>
-                <Route path='/' element={<Home/>}></Route>
+    <Router>
+        <Nav_bar />
+      <Routes>
+          <Route path='/' element={<Home/>}/>
 
-                <Route path='/cules' element={<FormCules />}></Route>
+          <Route path='/cules' element={<FormCules />}/>
 
-                <Route path='/total' element={<Total_cules/>}> </Route>
+          <Route path='/total' element={<Total_cules/>}/>
 
-                <Route path='/fertilizare' element={<Fertilizare/>}> </Route>
+          <Route path='/fertilizare' element={<Fertilizare/>}/>
 
-                <Route path='/detalii' element={<Details/>}> </Route>
+          <Route path='/probleme' element={<Probleme/>}/>
 
-            </Routes>
-          </Router>
+          <Route path='/login' element={<Login/>}/>
 
-    </div>
-      
-        
-
-
+      </Routes>
+    </Router>
 
   )
 
